@@ -21,6 +21,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Dotenv
+	implementation 'io.github.cdimascio:dotenv-java:3.1.0'
 	// WebSocket dependency
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     // Security and OAuth2 dependencies
