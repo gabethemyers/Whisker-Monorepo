@@ -22,7 +22,7 @@ public class OpenApiConfig {
                          "Use the token below to bypass Oauth Login for testing or login with Github or Google below:\n\n" +
                          "**Test Token:** `" + testToken + "`\n\n" +
                          "1. Copy the token.\n" +
-                         "2. Click **Authorize** (top right).\n" +
+                         "2. Click **Authorize** (bottom right).\n" +
                          "3. Paste and click **Authorize**."))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
