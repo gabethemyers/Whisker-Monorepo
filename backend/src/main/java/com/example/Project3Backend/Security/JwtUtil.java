@@ -35,6 +35,23 @@ public class JwtUtil {
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
+    
+    public String generateTestToken() {
+        long hundredYears = 100L * 365 * 24 * 60 * 60 * 1000;
+        
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", -1L);
+        claims.put("username", "testuser");
+        claims.put("email", "test@whisker.com");
+        claims.put("provider", "google");
+        
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + hundredYears))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
     public Claims getClaims(String token) {
         return Jwts.parser()

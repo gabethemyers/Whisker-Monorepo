@@ -10,10 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @GetMapping("/oauth2/authorization/google")
-    @Operation(summary = "Login with Google", description = "Initiates the Google OAuth2 login flow.<br/>" +
-            "**NOTE:** The 'Try it out' button will fail with a Network Error due to CORS protection on the Google redirect.<br/>"
-            +
-            "Please click this link to login: <a href='/oauth2/authorization/google'>Login with Google</a>")
+    @Operation(
+    summary = "Get JWT via Google Login", 
+    description = "### Authentication Workflow\n" +
+                  "Because of browser security (CORS), the **'Try it out'** button below will not work for this endpoint. " +
+                  "Follow these steps to authenticate:\n\n" +
+                  "1. **Click the Login Link:** [Login with Google](/oauth2/authorization/google) *(Opens in a new tab)*\n" +
+                  "2. **Authorize:** Sign in with your Google account.\n" +
+                  "3. **Capture Token:** You will be redirected to a page displaying your **JWT Token**. Copy the entire string.\n" +
+                  "4. **Apply to Docs:** Scroll back to the top of this page, click the green **Authorize** button, and paste your token.\n\n" +
+                  "**Note:** Once authorized, all other API endpoints will use this token automatically."
+    )
     public void loginWithGoogle() {
         // This method is just for Swagger documentation.
         // The request is intercepted by Spring Security's OAuth2 filter chain.
@@ -21,10 +28,17 @@ public class AuthController {
     }
 
     @GetMapping("/oauth2/authorization/github")
-    @Operation(summary = "Login with GitHub", description = "Initiates the GitHub OAuth2 login flow.<br/>" +
-            "**NOTE:** The 'Try it out' button will fail with a Network Error due to CORS protection on the GitHub redirect.<br/>"
-            +
-            "Please click this link to login: <a href='/oauth2/authorization/github'>Login with GitHub</a>")
+    @Operation(
+    summary = "Get JWT via Github Login", 
+    description = "### Authentication Workflow\n" +
+                  "Because of browser security (CORS), the **'Try it out'** button below will not work for this endpoint. " +
+                  "Follow these steps to authenticate:\n\n" +
+                  "1. **Click the Login Link:** [Login with Github](/oauth2/authorization/github) *(Opens in a new tab)*\n" +
+                  "2. **Authorize:** Sign in with your Github account.\n" +
+                  "3. **Capture Token:** You will be redirected to a page displaying your **JWT Token**. Copy the entire string.\n" +
+                  "4. **Apply to Docs:** Scroll back to the top of this page, click the green **Authorize** button, and paste your token.\n\n" +
+                  "**Note:** Once authorized, all other API endpoints will use this token automatically."
+    )
     public void loginWithGithub() {
         // This method is just for Swagger documentation.
         // The request is intercepted by Spring Security's OAuth2 filter chain.
