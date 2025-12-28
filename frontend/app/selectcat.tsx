@@ -19,8 +19,6 @@ import { Cat, createCat, getCatsByUser, getCurrentUser } from '@/utils/api';
 import { getJwt, getSelectedCatId, setSelectedCatId } from '@/utils/auth';
 import * as ImagePicker from 'expo-image-picker';
 
-const BASE_URL = 'https://group5project3-74e9cad2d6ba.herokuapp.com';
-
 export default function SelectCatScreen() {
   const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<number | null>(null);

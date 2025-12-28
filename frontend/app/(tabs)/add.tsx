@@ -1,7 +1,7 @@
 // app/(tabs)/add.tsx
 // npm install expo-image-picker
 // use above if errors
-import { Cat, getCatsByUser, getCurrentUser } from '@/utils/api';
+import { API_BASE_URL, Cat, getCatsByUser, getCurrentUser } from '@/utils/api';
 import { getJwt, getUserId } from '@/utils/auth';
 import * as ImagePicker from "expo-image-picker";
 import { router } from 'expo-router';
@@ -20,7 +20,7 @@ import {
   View
 } from 'react-native';
 
-const BASE_URL = 'https://group5project3-74e9cad2d6ba.herokuapp.com';
+const BASE_URL = API_BASE_URL;
 
 const uriToBlob = async (uri: string) => {
   const res = await fetch(uri);
