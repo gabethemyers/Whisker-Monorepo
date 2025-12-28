@@ -5,9 +5,9 @@ import { getUserId } from '@/utils/auth';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { API_BASE_URL } from '@/utils/api';
 
-const WS_URL = 'https://group5project3-74e9cad2d6ba.herokuapp.com/ws';
-
+const WS_URL = `${API_BASE_URL}/ws`
 export default function MessagesScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();

@@ -28,6 +28,7 @@ import {
   User as ApiUser,
   getCurrentUser,
   getPostsByCat,
+  API_BASE_URL,
 } from '@/utils/api';
 import { getJwt, getSelectedCatId, logout } from '@/utils/auth';
 
@@ -112,7 +113,7 @@ export default function ProfileScreen() {
       try {
         // fetch all cats, then find the active one
         const res = await fetch(
-          'https://group5project3-74e9cad2d6ba.herokuapp.com/api/cats',
+          `${API_BASE_URL}/api/cats`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
