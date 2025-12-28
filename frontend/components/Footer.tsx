@@ -28,7 +28,7 @@ export default function Footer() {
 
         <Pressable
           // ✅ this is the fixed line:
-          onPress={() => router.push('/signIn')}
+          onPress={() => router.push('/signin')}
           style={({ pressed }) => ({
             opacity: pressed ? 0.7 : 1,
             backgroundColor: '#ff6f61',

@@ -241,7 +241,7 @@ export default function ProfileScreen() {
           <View style={{ flexDirection: 'row', gap: 8 }}>
             <TouchableOpacity
               style={styles.changeCatButton}
-              onPress={() => router.push('/selectCat')}
+              onPress={() => router.push('/selectcat')}
             >
               <Text style={styles.changeCatButtonText}>
                 {selectedCatId ? 'Change cat' : 'Choose cat'}
@@ -251,7 +251,7 @@ export default function ProfileScreen() {
               style={styles.logoutButton}
               onPress={async () => {
                 await logout();
-                router.replace('/signIn');
+                router.replace('/signin');
               }}
             >
               <Text style={styles.logoutText}>Logout</Text>

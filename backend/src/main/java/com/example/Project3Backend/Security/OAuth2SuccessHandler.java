@@ -99,7 +99,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             response.getWriter().flush();
         } else {
             // Redirect to frontend with JWT token as query parameter
-            String redirectUrl = frontendUrl + "/loginSuccess?token=" + token;
+            String redirectUrl = frontendUrl + "/loginsuccess?token=" + token;
             getRedirectStrategy().sendRedirect(request, response, redirectUrl);
         }
     }
