@@ -4,7 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -20,6 +22,9 @@ public class JwtUtil {
 
     @Value("${jwt.expiration:86400000}")
     private long expiration;
+
+    @Autowired
+    private Environment environment;
 
     public String generateToken(Long userId, String username, String email, String provider) {
         Map<String, Object> claims = new HashMap<>();
@@ -45,6 +50,9 @@ public class JwtUtil {
         claims.put("email", "test@whisker.com");
         claims.put("provider", "google");
         
+        if (!environment.acceptsProfiles("test")) {
+            throw new IllegalStateException("Test token can only be generated in test environment");
+        }
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date())

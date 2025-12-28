@@ -29,12 +29,12 @@ public class AuthController {
 
     @GetMapping("/oauth2/authorization/github")
     @Operation(
-    summary = "Get JWT via Github Login", 
+    summary = "Get JWT via GitHub Login", 
     description = "### Authentication Workflow\n" +
                   "Because of browser security (CORS), the **'Try it out'** button below will not work for this endpoint. " +
                   "Follow these steps to authenticate:\n\n" +
-                  "1. **Click the Login Link:** [Login with Github](/oauth2/authorization/github) *(Opens in a new tab)*\n" +
-                  "2. **Authorize:** Sign in with your Github account.\n" +
+                  "1. **Click the Login Link:** [Login with GitHub](/oauth2/authorization/github) *(Opens in a new tab)*\n" +
+                  "2. **Authorize:** Sign in with your GitHub account.\n" +
                   "3. **Capture Token:** You will be redirected to a page displaying your **JWT Token**. Copy the entire string.\n" +
                   "4. **Apply to Docs:** Scroll back to the top of this page, click the green **Authorize** button, and paste your token.\n\n" +
                   "**Note:** Once authorized, all other API endpoints will use this token automatically."
