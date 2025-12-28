@@ -80,7 +80,7 @@ export default function MessagesScreen() {
         <Header />
         <View style={styles.center}>
           <Text style={styles.messageText}>Please sign in to view messages.</Text>
-          <TouchableOpacity style={styles.signInButton} onPress={() => router.push('/signIn')}>
+          <TouchableOpacity style={styles.signInButton} onPress={() => router.push('/signin')}>
             <Text style={styles.signInButtonText}>Sign In</Text>
           </TouchableOpacity>
         </View>

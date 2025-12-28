@@ -97,7 +97,7 @@ export default function SearchScreen() {
       activeOpacity={0.7}
       onPress={() => {
         router.push({
-          pathname: '/userProfile',
+          pathname: '/userprofile',
           params: {
             userId: item.id,
             username: item.username,

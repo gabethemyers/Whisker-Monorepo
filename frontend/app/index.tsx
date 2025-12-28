@@ -7,7 +7,7 @@ export default function IndexScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace('/signIn');
+      router.replace('/signin');
     }, 0);
 
     return () => clearTimeout(timer);
