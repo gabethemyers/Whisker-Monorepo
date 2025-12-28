@@ -1,6 +1,7 @@
 import { getJwt } from './auth';
 
-const BASE_URL = 'https://group5project3-74e9cad2d6ba.herokuapp.com';
+const BASE_URL = 'https://whisker-backend.onrender.com';
+export const API_BASE_URL = BASE_URL;
 
 // ---------- Types ----------
 
