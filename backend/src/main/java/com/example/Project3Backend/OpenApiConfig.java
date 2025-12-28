@@ -19,7 +19,7 @@ public class OpenApiConfig {
                         .title("Whisker Backend API")
                         .version("1.0")
                         .description("### Quick Test Mode\n" +
-                         "Use the token below to bypass Oauth Login for testing or login with Github or Google below:\n\n" +
+                         "Use the token below to bypass OAuth Login for testing or login with GitHub or Google below:\n\n" +
                          "**Test Token:** `" + testToken + "`\n\n" +
                          "1. Copy the token.\n" +
                          "2. Click **Authorize** (bottom right).\n" +

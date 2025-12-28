@@ -21,7 +21,7 @@ WORKDIR /app
 
 # Copy the jar from the build stage
 # Note: Ensure the path matches where Gradle outputs your jar (usually build/libs)
-COPY --from=build /app/build/libs/Project3Backend-*.jar app.jar
+COPY --from=build /app/build/libs/Project3Backend-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose Spring Boot's default port
 EXPOSE 8080
