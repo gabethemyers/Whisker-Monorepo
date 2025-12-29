@@ -204,13 +204,13 @@ export default function AddScreen() {
                       </Text>
                     </View>
                   )}
-                  <Text style={[styles.catName, catId === item.id && styles.catNameSelected]} numberOfLines={1}>
+                  <Text style={[styles.catName, catId === item.id && styles.catNameSelected]} numberOfLines={2}>
                     {item.name}
                     {item.userId !== currentUser && ' (Shared)'}
                   </Text>
                 </TouchableOpacity>
               )}
-              contentContainerStyle={{ paddingHorizontal: 4 }}
+              contentContainerStyle={{ paddingHorizontal: 4, paddingVertical: 4 }}
             />
           </View>
 
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   catListContainer: {
-    height: 110,
+    height: 130,
     width: '100%',
   },
   catOption: {
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'transparent',
     backgroundColor: '#f9f9f9',
-    width: 80,
+    width: 100,
   },
   catOptionSelected: {
     borderColor: '#007AFF',
@@ -356,9 +356,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   catName: {
-    fontSize: 12,
+    fontSize: 11,
     textAlign: 'center',
     color: '#333',
+    lineHeight: 14,
   },
   catNameSelected: {
     color: '#007AFF',
