@@ -1,7 +1,7 @@
 // app/(tabs)/add.tsx
 // npm install expo-image-picker
 // use above if errors
-import { API_BASE_URL, Cat, getCatsByUser, getCurrentUser } from '@/utils/api';
+import { API_BASE_URL, Cat, getAllCats, getCatsByUser, getCurrentUser } from '@/utils/api';
 import { getJwt, getUserId } from '@/utils/auth';
 import * as ImagePicker from "expo-image-picker";
 import { router } from 'expo-router';
@@ -39,6 +39,8 @@ export default function AddScreen() {
   const [posting, setPosting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
+  const [currentUser, setCurrentUser] = useState<number | null>(null);
+
   useEffect(() => {
     const loadData = async () => {
       const t = await getJwt();
@@ -47,10 +49,18 @@ export default function AddScreen() {
       if (t) {
         try {
           const user = await getCurrentUser();
-          if (user) {
-            const userCats = await getCatsByUser(user.id);
-            setCats(userCats);
-          }
+          if (user) setCurrentUser(user.id);
+
+          const allCats = await getAllCats();
+          // Sort: owned cats first, then shared cats
+          const sortedCats = allCats.sort((a, b) => {
+            const aIsOwned = a.userId === user?.id;
+            const bIsOwned = b.userId === user?.id;
+            if (aIsOwned && !bIsOwned) return -1;
+            if (!aIsOwned && bIsOwned) return 1;
+            return 0;
+          });
+          setCats(sortedCats);
         } catch (err) {
           console.error("Failed to load cats", err);
         }
@@ -170,6 +180,7 @@ export default function AddScreen() {
           />
 
           <Text style={styles.label}>Select a Cat:</Text>
+          <Text style={styles.helperText}>Want to create a new cat? Go to the Account tab.</Text>
           <View style={styles.catListContainer}>
             <FlatList
               data={cats}
@@ -193,7 +204,10 @@ export default function AddScreen() {
                       </Text>
                     </View>
                   )}
-                  <Text style={[styles.catName, catId === item.id && styles.catNameSelected]} numberOfLines={1}>{item.name}</Text>
+                  <Text style={[styles.catName, catId === item.id && styles.catNameSelected]} numberOfLines={1}>
+                    {item.name}
+                    {item.userId !== currentUser && ' (Shared)'}
+                  </Text>
                 </TouchableOpacity>
               )}
               contentContainerStyle={{ paddingHorizontal: 4 }}
@@ -296,6 +310,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginTop: 20,
+    marginBottom: 10,
+  },
+  helperText: {
+    fontSize: 12,
+    color: '#666',
     marginBottom: 10,
   },
   catListContainer: {

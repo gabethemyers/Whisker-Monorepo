@@ -360,7 +360,7 @@ export default function ProfileScreen() {
 
   // Signed in but no cat yet: go to selectCat screen
   if (selectedCatId == null) {
-    router.replace('/selectCat');
+    router.replace('/selectcat');
     return null;
   }
 
