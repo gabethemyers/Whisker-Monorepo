@@ -186,6 +186,7 @@ export default function AddScreen() {
               data={cats}
               horizontal
               showsHorizontalScrollIndicator={false}
+              nestedScrollEnabled={true}
               keyExtractor={(item) => String(item.id)}
               renderItem={({ item }) => (
                 <TouchableOpacity
