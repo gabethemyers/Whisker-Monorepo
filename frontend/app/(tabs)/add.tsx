@@ -9,7 +9,6 @@ import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   SafeAreaView,
   ScrollView,
@@ -182,14 +181,14 @@ export default function AddScreen() {
           <Text style={styles.label}>Select a Cat:</Text>
           <Text style={styles.helperText}>Want to create a new cat? Go to the Account tab.</Text>
           <View style={styles.catListContainer}>
-            <FlatList
-              data={cats}
+            <ScrollView
               horizontal
-              showsHorizontalScrollIndicator={false}
-              nestedScrollEnabled={true}
-              keyExtractor={(item) => String(item.id)}
-              renderItem={({ item }) => (
+              showsHorizontalScrollIndicator={true}
+              contentContainerStyle={{ paddingHorizontal: 4, paddingVertical: 4 }}
+            >
+              {cats.map((item) => (
                 <TouchableOpacity
+                  key={item.id}
                   style={[
                     styles.catOption,
                     catId === item.id && styles.catOptionSelected
@@ -210,9 +209,8 @@ export default function AddScreen() {
                     {item.userId !== currentUser && ' (Shared)'}
                   </Text>
                 </TouchableOpacity>
-              )}
-              contentContainerStyle={{ paddingHorizontal: 4, paddingVertical: 4 }}
-            />
+              ))}
+            </ScrollView>
           </View>
 
           <TouchableOpacity
