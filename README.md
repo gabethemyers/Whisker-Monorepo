@@ -5,7 +5,7 @@
 🟢 **Live Frontend:** [rainbow-daifuku-f8f573.netlify.app](https://rainbow-daifuku-f8f573.netlify.app/)  
 🟢 **Live Backend:** [whiskr-backend-gtdvk.ondigitalocean.app](https://whiskr-backend-gtdvk.ondigitalocean.app)
 
----
+
 
 ## 📖 Project Overview
 
@@ -13,7 +13,7 @@ Whiskr is a monolithic repository containing a production-ready social media pla
 
 The core of this project is a robust, scalable backend architecture designed to handle complex relational data, secure authentication, and real-time communication. It uses **Supabase (PostgreSQL)** for persistence and **DigitalOcean** for containerized deployment.
 
----
+
 
 ## ⚙️ Backend Engineering Highlights
 
@@ -51,7 +51,6 @@ The database schema is highly normalized to ensure data integrity across the pla
 * **Server-Side Image Compression:** Integrated `Thumbnailator` to resize and compress uploads before storage, reducing bandwidth usage and optimizing load times for mobile clients.
 * **Memory Management:** JVM configured with specific heap size limits to run efficiently in resource-constrained cloud environments.
 
----
 
 ## 📂 Repository Structure
 
@@ -67,7 +66,6 @@ whisker-monorepo/
 └── supabase/            # Database schema and SQL scripts
 ```
 
----
 
 ## 🚀 Deployment Pipeline
 
@@ -81,8 +79,8 @@ The backend is containerized using **Docker**.
 ### Frontend (Netlify)
 The React Native web build is deployed to **Netlify**. It communicates with the backend via REST and WebSocket Secure (WSS) protocols.
 
----
+
 
 ## 📬 Contact
 
-**Gabriel Myers** *Full-Stack Software Engineer | Backend Specialist* [LinkedIn](https://www.linkedin.com/in/gabriel-myers-dev) | [GitHub](https://github.com/gabethemyers)
+**Gabriel Myers** | *Full-Stack Software Engineer* | [LinkedIn](https://www.linkedin.com/in/gabriel-myers-dev) | [GitHub](https://github.com/gabethemyers)
