@@ -85,4 +85,4 @@ The React Native web build is deployed to **Netlify**. It communicates with the 
 
 ## 📬 Contact
 
-**Gabriel Myers Full** *Stack Software Engineer | Backend Specialist* [LinkedIn](https://www.linkedin.com/in/gabriel-myers-dev) | [GitHub](https://github.com/gabethemyers)
+**Gabriel Myers** *Full-Stack Software Engineer | Backend Specialist* [LinkedIn](https://www.linkedin.com/in/gabriel-myers-dev) | [GitHub](https://github.com/gabethemyers)
