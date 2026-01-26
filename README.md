@@ -2,7 +2,7 @@
 
 **A Scalable Full-Stack Social Platform for Cats & Their Humans**
 
-🔴 **Live Frontend:** [rainbow-daifuku-f8f573.netlify.app](https://rainbow-daifuku-f8f573.netlify.app/)  
+🟢 **Live Frontend:** [rainbow-daifuku-f8f573.netlify.app](https://rainbow-daifuku-f8f573.netlify.app/)  
 🟢 **Live Backend:** [whiskr-backend-gtdvk.ondigitalocean.app](https://whiskr-backend-gtdvk.ondigitalocean.app)
 
 ---
