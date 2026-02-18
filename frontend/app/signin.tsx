@@ -73,13 +73,14 @@ export default function SignInScreen() {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
+    height: '100%',
     flexDirection: 'row',
     backgroundColor: '#fff',
   },
   leftPanel: {
     width: '50%',
     backgroundColor: Colors.light.background,
-    minHeight: '100%',
+    height: '100%',
     padding: 32,
     alignItems: 'center',
     justifyContent: 'center',
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
   },
   previewCard: {
     width: '100%',
-    height: '66%',
+    height: '58%',
+    maxHeight: 560,
     borderRadius: 24,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   rightPanel: {
     width: '50%',
     backgroundColor: '#fff',
-    minHeight: '100%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 32,
