@@ -1,6 +1,6 @@
 import { getJwt } from "./auth";
 
-const BASE_URL = "https://whiskr-backend-gtdvk.ondigitalocean.app";
+const BASE_URL = "http://172.236.250.43.nip.io:8081"
 export const API_BASE_URL = BASE_URL;
 
 // ---------- Types ----------
