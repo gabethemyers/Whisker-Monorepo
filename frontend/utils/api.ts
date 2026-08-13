@@ -1,6 +1,6 @@
 import { getJwt } from "./auth";
 
-const BASE_URL = "http://172.236.250.43.nip.io:8081"
+const BASE_URL = "https://whisker-backend.duckdns.org"
 export const API_BASE_URL = BASE_URL;
 
 // ---------- Types ----------
