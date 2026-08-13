@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=build /app/build/libs/Project3Backend-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose Spring Boot's default port
-EXPOSE 8080
+EXPOSE 8081
 
 # Run with memory optimizations for low-resource environments
 ENTRYPOINT ["java", "-Xmx400m", "-Xms256m", "-XX:+UseSerialGC", "-jar", "app.jar"]
