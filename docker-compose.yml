@@ -1,0 +1,15 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: whisker-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    networks:
+      - web_gateway
+
+networks:
+  web_gateway:
+    external: true
