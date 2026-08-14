@@ -13,7 +13,7 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        String testToken = "eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6Imdvb2dsZSIsInVzZXJJZCI6LTEsImVtYWlsIjoidGVzdEB3aGlza2VyLmNvbSIsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NjY2NDU0MjYsImV4cCI6NDkyMDI0NTQyNn0.ZiHGLCHFhI0MWVKXVXuZR8nATXwV4DvfuE_pYTSOmAA";
+        String testToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOi0xLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QHdoaXNrZXIuY29tIiwicHJvdmlkZXIiOiJnb29nbGUiLCJpYXQiOjE3ODY2NzQwNzQsImV4cCI6OTk5OTk5OTk5OX0.qY3nDNINoAfGkzvkUKFZxiI0iBASyxrWq7TrOjQ8QoI";
         return new OpenAPI()
                 .info(new Info()
                         .title("Whisker Backend API")
