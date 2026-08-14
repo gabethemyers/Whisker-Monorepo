@@ -42,8 +42,11 @@ public class PostService {
     }
 
     // UPDATE
-    public Posts updatePost(long id, Posts postDetails) {
+    public Posts updatePost(long id, Posts postDetails, Long userId) {
         Posts existingPost = getPostById(id);
+        if (!existingPost.getAuthorId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not your post");
+        }
 
         existingPost.setCaption(postDetails.getCaption());
         existingPost.setImageUrl(postDetails.getImageUrl());
@@ -52,8 +55,11 @@ public class PostService {
     }
 
     // DELETE
-    public void deletePost(long id) {
+    public void deletePost(long id, Long userId) {
         Posts post = getPostById(id);
+        if (!post.getAuthorId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not your post");
+        }
         postRepository.delete(post);
     }
 

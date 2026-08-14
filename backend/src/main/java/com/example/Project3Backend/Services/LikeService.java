@@ -43,8 +43,11 @@ public class LikeService {
     }
 
     // DELETE by like ID
-    public void deleteLike(Long id) {
+    public void deleteLike(Long id, Long userId) {
         Likes like = getLikeById(id);
+        if (!like.getUserId().equals(userId)) {
+            throw new RuntimeException("Not your like");
+        }
         likeRepository.delete(like);
         postService.decrementLikes(like.getPostId());
     }

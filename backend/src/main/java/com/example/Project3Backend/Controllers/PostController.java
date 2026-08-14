@@ -5,9 +5,11 @@ import com.example.Project3Backend.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -80,14 +82,25 @@ public class PostController {
     // UPDATE a post
     @PutMapping("/{id}")
     public ResponseEntity<Posts> updatePost(@PathVariable long id, @RequestBody Posts postDetails) {
-        Posts updatedPost = postService.updatePost(id, postDetails);
+        Long userId = getUserIdFromToken();
+        Posts updatedPost = postService.updatePost(id, postDetails, userId);
         return ResponseEntity.ok(updatedPost);
     }
 
     // DELETE a post
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable long id) {
-        postService.deletePost(id);
+        Long userId = getUserIdFromToken();
+        postService.deletePost(id, userId);
         return ResponseEntity.noContent().build();
+    }
+
+    private Long getUserIdFromToken() {
+        Map<String, Object> claims = (Map<String, Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object userIdObj = claims.get("userId");
+        if (userIdObj instanceof Integer) {
+            return ((Integer) userIdObj).longValue();
+        }
+        return ((Long) userIdObj);
     }
 }

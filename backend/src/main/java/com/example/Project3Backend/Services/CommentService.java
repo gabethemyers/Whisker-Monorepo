@@ -42,15 +42,21 @@ public class CommentService {
     }
 
     // UPDATE
-    public Comments updateComment(Long id, Comments commentDetails) {
+    public Comments updateComment(Long id, Comments commentDetails, Long userId) {
         Comments existingComment = getCommentById(id);
+        if (!existingComment.getUserId().equals(userId)) {
+            throw new RuntimeException("Not your comment");
+        }
         existingComment.setContent(commentDetails.getContent());
         return commentRepository.save(existingComment);
     }
 
     // DELETE
-    public void deleteComment(Long id) {
+    public void deleteComment(Long id, Long userId) {
         Comments comment = getCommentById(id);
+        if (!comment.getUserId().equals(userId)) {
+            throw new RuntimeException("Not your comment");
+        }
         commentRepository.delete(comment);
         postService.decrementComments(comment.getPostId());
     }

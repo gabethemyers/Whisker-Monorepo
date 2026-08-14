@@ -5,9 +5,11 @@ import com.example.Project3Backend.Services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/comments")
@@ -56,10 +58,14 @@ public class CommentController {
     // UPDATE a comment
     @PutMapping("/{id}")
     public ResponseEntity<Comments> updateComment(@PathVariable Long id, @RequestBody Comments commentDetails) {
+        Long userId = getUserIdFromToken();
         try {
-            Comments updatedComment = commentService.updateComment(id, commentDetails);
+            Comments updatedComment = commentService.updateComment(id, commentDetails, userId);
             return ResponseEntity.ok(updatedComment);
         } catch (RuntimeException e) {
+            if (e.getMessage().contains("Not your")) {
+                return ResponseEntity.status(403).body(null);
+            }
             return ResponseEntity.notFound().build();
         }
     }
@@ -67,11 +73,24 @@ public class CommentController {
     // DELETE a comment
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
+        Long userId = getUserIdFromToken();
         try {
-            commentService.deleteComment(id);
+            commentService.deleteComment(id, userId);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
+            if (e.getMessage().contains("Not your")) {
+                return ResponseEntity.status(403).body(null);
+            }
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private Long getUserIdFromToken() {
+        Map<String, Object> claims = (Map<String, Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object userIdObj = claims.get("userId");
+        if (userIdObj instanceof Integer) {
+            return ((Integer) userIdObj).longValue();
+        }
+        return ((Long) userIdObj);
     }
 }

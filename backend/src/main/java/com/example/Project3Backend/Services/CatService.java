@@ -32,16 +32,22 @@ public class CatService {
         return catRepository.save(cat);
     }
 
-    public Cat updateCat(Long id, Cat catDetails) {
+    public Cat updateCat(Long id, Cat catDetails, Long userId) {
         Cat existingCat = getCatById(id);
+        if (!existingCat.getUserId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not your cat profile");
+        }
         existingCat.setName(catDetails.getName());
         existingCat.setAvatarUrl(catDetails.getAvatarUrl());
         existingCat.setBio(catDetails.getBio());
         return catRepository.save(existingCat);
     }
 
-    public void deleteCat(Long id) {
+    public void deleteCat(Long id, Long userId) {
         Cat cat = getCatById(id);
+        if (!cat.getUserId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not your cat profile");
+        }
         catRepository.delete(cat);
     }
 }

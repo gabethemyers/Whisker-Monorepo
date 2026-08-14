@@ -5,10 +5,12 @@ import com.example.Project3Backend.Services.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/likes")
@@ -61,11 +63,24 @@ public class LikeController {
     // DELETE a like (unlike)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLike(@PathVariable Long id) {
+        Long userId = getUserIdFromToken();
         try {
-            likeService.deleteLike(id);
+            likeService.deleteLike(id, userId);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
+            if (e.getMessage().contains("Not your")) {
+                return ResponseEntity.status(403).body(null);
+            }
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private Long getUserIdFromToken() {
+        Map<String, Object> claims = (Map<String, Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object userIdObj = claims.get("userId");
+        if (userIdObj instanceof Integer) {
+            return ((Integer) userIdObj).longValue();
+        }
+        return ((Long) userIdObj);
     }
 }

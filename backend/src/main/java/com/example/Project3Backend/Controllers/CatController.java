@@ -6,10 +6,12 @@ import com.example.Project3Backend.Services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/cats")
@@ -71,13 +73,24 @@ public class CatController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Cat> updateCat(@PathVariable Long id, @RequestBody Cat catDetails) {
-        Cat updatedCat = catService.updateCat(id, catDetails);
+        Long userId = getUserIdFromToken();
+        Cat updatedCat = catService.updateCat(id, catDetails, userId);
         return ResponseEntity.ok(updatedCat);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCat(@PathVariable Long id) {
-        catService.deleteCat(id);
+        Long userId = getUserIdFromToken();
+        catService.deleteCat(id, userId);
         return ResponseEntity.noContent().build();
+    }
+
+    private Long getUserIdFromToken() {
+        Map<String, Object> claims = (Map<String, Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object userIdObj = claims.get("userId");
+        if (userIdObj instanceof Integer) {
+            return ((Integer) userIdObj).longValue();
+        }
+        return ((Long) userIdObj);
     }
 }
