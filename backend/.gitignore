@@ -1,4 +1,6 @@
 HELP.md
+# local working notes (not committed)
+TODO-backend.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
