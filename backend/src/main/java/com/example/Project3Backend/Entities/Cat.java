@@ -3,6 +3,9 @@ package com.example.Project3Backend.Entities;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "cats")
@@ -29,6 +32,10 @@ public class Cat {
 
     @Column(name = "birthdate")
     private LocalDate birthdate;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "cats")
+    private Set<Posts> posts = new LinkedHashSet<>();
 
     public Cat() {
     }
@@ -87,5 +94,13 @@ public class Cat {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public Set<Posts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Posts> posts) {
+        this.posts = posts;
     }
 }

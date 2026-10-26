@@ -3,6 +3,8 @@ package com.example.Project3Backend.Entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 @Entity
 @Table(name = "posts")
@@ -32,6 +34,14 @@ public class Posts {
 
     @Column(name = "cat_id")
     private Long catId;
+
+    @ManyToMany
+    @JoinTable(
+        name="post_cats",
+        joinColumns = @JoinColumn(name="post_id"),
+        inverseJoinColumns = @JoinColumn(name="cat_id")
+    )
+    private Set<Cat> cats = new LinkedHashSet<>();
 
     // --- Constructors ---
 
@@ -103,4 +113,12 @@ public class Posts {
     public void setCatId(Long catId) {
         this.catId = catId;
     }
+
+    public Set<Cat> getCats() {
+        return cats;
+    }
+
+    public void setCats(Set<Cat> cats) {
+        this.cats = cats;
+    } 
 }

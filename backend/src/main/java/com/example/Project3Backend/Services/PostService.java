@@ -2,6 +2,7 @@ package com.example.Project3Backend.Services;
 
 import com.example.Project3Backend.Entities.Posts;
 import com.example.Project3Backend.Repositories.PostRepository;
+import com.example.Project3Backend.Repositories.CatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,9 +17,18 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private CatRepository catRepository;
+
     // CREATE
-    public Posts createPost(Posts post) {
+    public Posts createPost(Posts post, List<Long> catIds) {
         post.setCreatedAt(OffsetDateTime.now());
+        // sets first cat ID as primary for backward compatibility
+        if (catIds != null && !catIds.isEmpty()) {
+            post.setCatId(catIds.get(0));
+            catRepository.findAllById(catIds).forEach(post.getCats()::add);
+        }
+
         return postRepository.save(post);
     }
 
@@ -32,7 +42,7 @@ public class PostService {
     }
 
     public List<Posts> getPostsByCatId(Long catId) {
-        return postRepository.findAllByCatIdOrderByCreatedAtDesc(catId);
+        return postRepository.findPostsByCatId(catId);
     }
 
     // READ ONE

@@ -32,19 +32,18 @@ public class PostController {
             @RequestParam("file") org.springframework.web.multipart.MultipartFile file,
             @RequestParam("caption") String caption,
             @RequestParam("authorId") Long authorId,
-            @RequestParam("catId") Long catId) {
+            @RequestParam("catIds") List<Long> catIds) {
         try {
             String imageUrl = imageService.uploadImage(file);
 
             Posts post = new Posts();
             post.setCaption(caption);
             post.setAuthorId(authorId);
-            post.setCatId(catId);
             post.setImageUrl(imageUrl);
             post.setCreatedAt(java.time.OffsetDateTime.now());
             // likes and comments count are default 0 in entity
 
-            Posts createdPost = postService.createPost(post);
+            Posts createdPost = postService.createPost(post, catIds);
             return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
         } catch (java.io.IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
