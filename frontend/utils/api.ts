@@ -29,6 +29,7 @@ export interface Post {
   imageUrl: string;
   authorId: number;
   catId?: number;
+  cats: Cat[];
   likesCount: number;
   commentCount: number;
   createdAt: string;

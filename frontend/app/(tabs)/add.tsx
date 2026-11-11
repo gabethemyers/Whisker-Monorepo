@@ -31,7 +31,7 @@ export default function AddScreen() {
   const [loading, setLoading] = useState(true);
 
   const [caption, setCaption] = useState('');
-  const [catId, setCatId] = useState<number | null>(null);
+  const [catIds, setCatIds] = useState<number[]>([]);
   const [cats, setCats] = useState<Cat[]>([]);
   const [imageFile, setImageFile] = useState<any>(null);
 
@@ -91,8 +91,8 @@ export default function AddScreen() {
         setMessage("Please select an image first.");
         return;
       }
-      if (!catId) {
-        setMessage("Please select a cat.");
+      if (catIds.length < 1) {
+        setMessage("Please select at least one cat.");
         return;
       }
 
@@ -100,7 +100,9 @@ export default function AddScreen() {
 
       formData.append("caption", caption);
       formData.append("authorId", String(userId));
-      formData.append("catId", String(catId));
+      for (const catId of catIds) {
+        formData.append("catIds", String(catId));
+      }
 
       const fileBlob = await uriToBlob(imageFile.uri);
       formData.append("file", fileBlob, "upload.jpg");
@@ -120,7 +122,7 @@ export default function AddScreen() {
 
       setMessage("Post created successfully!");
       setCaption("");
-      setCatId(null);
+      setCatIds([]);
       setImageFile(null);
 
       setTimeout(() => {
@@ -178,7 +180,7 @@ export default function AddScreen() {
             style={styles.input}
           />
 
-          <Text style={styles.label}>Select a Cat:</Text>
+          <Text style={styles.label}>Select Cats:</Text>
           <Text style={styles.helperText}>Want to create a new cat? Go to the Account tab.</Text>
           <View style={styles.catListContainer}>
             <ScrollView
@@ -191,9 +193,17 @@ export default function AddScreen() {
                   key={item.id}
                   style={[
                     styles.catOption,
-                    catId === item.id && styles.catOptionSelected
+                    catIds.includes(item.id) && styles.catOptionSelected
                   ]}
-                  onPress={() => setCatId(item.id)}
+                  onPress={() =>
+                    {
+                      if (catIds.includes(item.id)) {
+                        setCatIds(catIds.filter(v => v !== item.id))
+                      } else {
+                        setCatIds([...catIds, item.id])
+                      }
+                    }
+                  }
                 >
                   {item.avatarUrl ? (
                     <Image source={{ uri: item.avatarUrl }} style={styles.catAvatar} />
@@ -204,7 +214,7 @@ export default function AddScreen() {
                       </Text>
                     </View>
                   )}
-                  <Text style={[styles.catName, catId === item.id && styles.catNameSelected]} numberOfLines={2}>
+                  <Text style={[styles.catName, catIds.includes(item.id) && styles.catNameSelected]} numberOfLines={2}>
                     {item.name}
                     {item.userId !== currentUser && ' (Shared)'}
                   </Text>

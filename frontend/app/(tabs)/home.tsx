@@ -6,12 +6,14 @@ import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import Header from '@/components/Header';
 import { ThemedText } from '@/components/themed-text';
 import { brandColor, globalStyles } from '@/styles/globalStyle';
-import { Post as ApiPost, Cat, getAllCats, getAllPosts, getAllUsers } from '@/utils/api';
+import { Post as ApiPost, getAllPosts, getAllUsers } from '@/utils/api';
 
 type PostWithDetails = ApiPost & {
   username?: string;
-  cat?: Cat;
 };
+
+// 3 is the max before the chips start clipping
+const CAT_CHIPS_MAX = 3;
 
 export default function HomeScreen() {
   const [posts, setPosts] = useState<PostWithDetails[]>([]);
@@ -40,18 +42,10 @@ export default function HomeScreen() {
           userMap[user.id] = user.username;
         });
 
-        // Fetch all cats to map cat details
-        const allCats = await getAllCats();
-        const catMap: Record<number, Cat> = {};
-        allCats.forEach(cat => {
-          catMap[cat.id] = cat;
-        });
-
-        // Attach usernames and cats to posts
+        // Attach usernames (cats already arrive on each post)
         const postsWithDetails = postsData.map((post) => ({
           ...post,
           username: userMap[post.authorId] || "Unknown User",
-          cat: post.catId ? catMap[post.catId] : undefined,
         }));
 
         setPosts(postsWithDetails);
@@ -103,20 +97,42 @@ export default function HomeScreen() {
 
                 {/* Header: Cat info */}
                 <View style={styles.postHeader}>
-                  {post.cat?.avatarUrl ? (
-                    <Image source={{ uri: post.cat.avatarUrl }} style={styles.avatar} />
+                  {post.cats.length === 0 ? (
+                    <View key="no-cat" style={styles.catChip}>
+                      <View style={styles.catChipAvatarPlaceholder}>
+                        <ThemedText style={styles.avatarPlaceholderText}>
+                          {(post.username || '?').charAt(0).toUpperCase()}
+                        </ThemedText>
+                      </View>
+                      <ThemedText style={styles.catChipName} numberOfLines={1}>
+                        {post.username || 'Unknown'}
+                      </ThemedText>
+                    </View>
                   ) : (
-                    <View style={styles.avatarPlaceholder}>
-                      <ThemedText style={styles.avatarPlaceholderText}>
-                        {(post.cat?.name || post.username || '?').charAt(0).toUpperCase()}
+                    post.cats.slice(0, CAT_CHIPS_MAX).map((cat) => (
+                      <View key={cat.id} style={styles.catChip}>
+                        {cat.avatarUrl ? (
+                          <Image source={{ uri: cat.avatarUrl }} style={styles.catChipAvatar} />
+                        ) : (
+                          <View style={styles.catChipAvatarPlaceholder}>
+                            <ThemedText style={styles.avatarPlaceholderText}>
+                              {cat.name.charAt(0).toUpperCase()}
+                            </ThemedText>
+                          </View>
+                        )}
+                        <ThemedText style={styles.catChipName} numberOfLines={1}>
+                          {cat.name}
+                        </ThemedText>
+                      </View>
+                    ))
+                  )}
+                  {post.cats.length > CAT_CHIPS_MAX && (
+                    <View style={styles.overflowBadge}>
+                      <ThemedText style={styles.overflowBadgeText}>
+                        +{post.cats.length - CAT_CHIPS_MAX}
                       </ThemedText>
                     </View>
                   )}
-                  <View>
-                    <ThemedText style={globalStyles.usernameText}>
-                      {post.cat?.name || post.username || 'Unknown'}
-                    </ThemedText>
-                  </View>
                 </View>
 
                 {/* Main Media: Full width image */}
@@ -225,6 +241,44 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  catChip: {
+    alignItems: 'center',
+    width: 70,
+    marginRight: 10,
+  },
+  catChipAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginBottom: 4,
+  },
+  catChipAvatarPlaceholder: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginBottom: 4,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  catChipName: {
+    fontSize: 11,
+    lineHeight: 14,
+    color: '#262626',
+    textAlign: 'center',
+  },
+  overflowBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginLeft: 6,
+    borderRadius: 8,
+    backgroundColor: '#eee',
+  },
+  overflowBadgeText: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#666',
   },
   subText: {
     fontSize: 12,
