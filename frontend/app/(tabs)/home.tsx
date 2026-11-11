@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#1f1f1f',
     textAlign: 'left',
-    maxWidth: 54,
+    maxWidth: 80,
   },
   overflowBadge: {
     paddingHorizontal: 8,
